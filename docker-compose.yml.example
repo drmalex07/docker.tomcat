@@ -1,0 +1,29 @@
+# vim: set syntax=yaml:
+
+version: '3'
+
+services:
+
+  tomcat:
+    image: 'local/tomcat:8.5'
+    build:
+      context: '.'
+    
+    environment:
+      DB_HOST: 'postgres-1.localdomain'
+      DB_PORT: '5432'
+      DB_NAME: 'helloworld'
+      DB_USERNAME: 'user'
+      DB_PASSWORD_FILE: 'secrets/db-password'
+      MANAGER_PASSWORD_FILE: 'secrets/manager-password'
+
+    volumes:  
+    - './webapps/hello-servlet.war:/usr/local/tomcat/webapps/hello-servlet.war:ro'
+    - './secrets/manager-password:/usr/local/tomcat/secrets/manager-password:ro'
+    - './secrets/db-password:/usr/local/tomcat/secrets/db-password:ro'
+    
+    ports:
+    - '8080:8080'
+
+volumes: {}
+

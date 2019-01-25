@@ -1,0 +1,6 @@
+/temp/
+/secrets/
+/webapps/*.war
+
+/.env
+/docker-compose.yml
