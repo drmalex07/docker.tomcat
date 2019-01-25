@@ -6,9 +6,9 @@
     <WatchedResource>WEB-INF/web.xml</WatchedResource>
     <WatchedResource>${catalina.base}/conf/web.xml</WatchedResource>
 
-    <Resource name="jdbc/postgres-1"
+    <Resource name="${db.resource-name}"
         auth="Container" 
-        type="javax.sql.DataSource" 
+        type="javax.sql.DataSource"
         driverClassName="org.postgresql.Driver" 
         url="jdbc:postgresql://${db.host}:${db.port}/${db.name}" 
         username="${db.username}" password="${db.password}"

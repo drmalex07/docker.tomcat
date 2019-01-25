@@ -12,8 +12,11 @@ fi
 
 tee -a conf/catalina.properties >/dev/null <<EOD
 
-# Auto-generated from ${0}
+# Auto-generated from ${0} at $(date)
+
 manager.password=$(cat ${MANAGER_PASSWORD_FILE})
+
+db.resource-name=${DB_RESOURCE_NAME}
 db.host=${DB_HOST}
 db.port=${DB_PORT}
 db.name=${DB_NAME}

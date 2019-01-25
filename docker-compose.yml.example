@@ -10,6 +10,7 @@ services:
       context: '.'
     
     environment:
+      DB_RESOURCE_NAME: 'jdbc/helloworld'
       DB_HOST: 'postgres-1.localdomain'
       DB_PORT: '5432'
       DB_NAME: 'helloworld'
