@@ -22,6 +22,7 @@ services:
     - './webapps/hello-servlet.war:/usr/local/tomcat/webapps/hello-servlet.war:ro'
     - './secrets/manager-password:/usr/local/tomcat/secrets/manager-password:ro'
     - './secrets/db-password:/usr/local/tomcat/secrets/db-password:ro'
+    - './logs:/usr/local/tomcat/logs'
     
     ports:
     - '8080:8080'
