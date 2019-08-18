@@ -1,6 +1,7 @@
 /temp/
 /secrets/
 /webapps/*.war
+/dependency/*.jar
 
 /.env
 /docker-compose.yml

@@ -9,8 +9,8 @@
     <Resource name="${db.resource-name}"
         auth="Container" 
         type="javax.sql.DataSource"
-        driverClassName="org.postgresql.Driver" 
-        url="jdbc:postgresql://${db.host}:${db.port}/${db.name}" 
+        driverClassName="${db.driver-class-name}" 
+        url="${db.url}" 
         username="${db.username}" password="${db.password}"
      />
 

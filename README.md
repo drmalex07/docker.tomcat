@@ -11,6 +11,9 @@ Create a directory to hold secrets (to be mounted in container):
 
 Copy `docker-compose.yml.example` to `docker-compose.yml` and edit to adjust to your needs. 
 
+Place your provided dependencies (e.g. driver JAR for the database resource) under `dependency`, and
+define relevant bind mounts inside `docker-compose.yml`.
+
 Place your webapps under `webapps` and define a relevant bind mount inside `docker-compose.yml`
 
 ## Run
