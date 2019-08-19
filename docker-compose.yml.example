@@ -16,16 +16,20 @@ services:
       DB_PASSWORD_FILE: 'secrets/db-password'
       DB_DRIVER_CLASS_NAME: 'org.postgresql.Driver'
       MANAGER_PASSWORD_FILE: 'secrets/manager-password'
+      KEYSTORE_PASSWORD_FILE: 'secrets/keystore-password'
 
-    volumes:  
+    volumes:
+    - './keystore.p12:/usr/local/tomcat/conf/keystore.p12:ro'
     - './dependency/postgresql-42.2.5.jar:/usr/local/tomcat/lib/postgresql-42.2.5.jar:ro'
     - './webapps/hello-servlet.war:/usr/local/tomcat/webapps/hello-servlet.war:ro'
+    - './secrets/keystore-password:/usr/local/tomcat/secrets/keystore-password:ro'
     - './secrets/manager-password:/usr/local/tomcat/secrets/manager-password:ro'
     - './secrets/db-password:/usr/local/tomcat/secrets/db-password:ro'
     - './logs:/usr/local/tomcat/logs'
     
     ports:
     - '8080:8080'
+    - '8443:8443'
 
 volumes: {}
 

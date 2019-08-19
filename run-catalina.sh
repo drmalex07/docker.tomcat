@@ -8,10 +8,15 @@ if [ ! -f "${DB_PASSWORD_FILE}" ]; then
     echo "The password file (DB_PASSWORD_FILE) is missing: ${DB_PASSWORD_FILE}" && exit 1
 fi
 
+if [ ! -f "${KEYSTORE_PASSWORD_FILE}" ]; then
+    echo "The password file (KEYSTORE_PASSWORD_FILE) is missing: ${KEYSTORE_PASSWORD_FILE}" && exit 1
+fi
+
 # Generate properties to be added to conf/catalina.properties
 
 tee -a conf/catalina.properties >/dev/null <<EOD
-# Auto-generated from ${0} at $(date)
+# auto-generated from ${0} at $(date)
+keystore.password=$(cat ${KEYSTORE_PASSWORD_FILE})
 manager.password=$(cat ${MANAGER_PASSWORD_FILE})
 db.resource-name=${DB_RESOURCE_NAME}
 db.url=${DB_URL}
