@@ -4,33 +4,27 @@ A docker-compose recipe for a Tomcat server instance
 
 ## Generate certificate for HTTPS
 
-The following is only an example of generating a proper PKCS12 bundle using `keytool` (same result can also be produced using openssl suite).
+The HTTPS configuration on APR implementation ([more](https://tomcat.apache.org/tomcat-8.5-doc/ssl-howto.html#Configuration)) requires keys and certificates in `PEM` format (unlike the configuration on JSSE which requires them as keystore).
 
-Generate a key-pair, say for a host `baz.example.com`:
+If we already have a `PKCS12` bundle, we can unpack its components (keys and certificates) with something like:
 
-    keytool -genkeypair -alias server -keyalg RSA -keystore keystore.p12 -storetype pkcs12 \
-        -dname 'CN=baz.example.com, OU=IT, O=Nowhere Land, L=Athens, ST=Greece, C=GR'
-        
-Generate a certificate request (CSR):
-
-    keytool -certreq -alias server -keystore keystore.p12 -file server.csr    
-
-Trust the CA that is signing our certificate (say `root.crt` is the CA certificate):
-
-    keytool -importcert -alias root -keystore keystore.p12 -trustcacerts -file root.crt
-
-After a CA has signed our certificate (say as `server.crt`), replace the self-signed certificate into the keystore:
-
-    keytool -importcert -alias server -keystore keystore.p12 -file server.crt
+    openssl pkcs12 -in keystore.p12 -nocerts
+    openssl pkcs12 -in keystore.p12 -nokeys
 
 ## Prepare directory
+
+Create a directory `certs` to hold keys and certificates:
+
+    * `root.crt`: A certificate bundle with our trusted authorities (CAs)
+    * `server.crt`: The server's certificate in `PEM` format (usually signed by someone from `root.crt`)
+    * `server.key`: The server's key in `PEM` format
 
 Create a directory to hold secrets (to be mounted in container):
 
     mkdir secrets
     # edit secrets/db-password, secrets/manager-password, secrets/keystore-password ...
 
-Place PKCS12 keystore `keystore.p12` under current directory.
+Note that `secrets/keystore-password` holds the password for the password-protected private key (`certs/server.key`)
 
 Copy `docker-compose.yml.example` to `docker-compose.yml` and edit to adjust to your needs. 
 

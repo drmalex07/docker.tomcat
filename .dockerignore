@@ -3,6 +3,7 @@ webapps/*.war
 dependency/*.jar
 temp/*
 secrets/*
+certs/*
 logs/*
 data/*
 docker-compose.yml

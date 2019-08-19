@@ -19,7 +19,9 @@ services:
       KEYSTORE_PASSWORD_FILE: 'secrets/keystore-password'
 
     volumes:
-    - './keystore.p12:/usr/local/tomcat/conf/keystore.p12:ro'
+    - './certs/root.crt:/usr/local/tomcat/conf/root.crt:ro'
+    - './certs/server.crt:/usr/local/tomcat/conf/server.crt:ro'
+    - './certs/server.key:/usr/local/tomcat/conf/server.key:ro'
     - './dependency/postgresql-42.2.5.jar:/usr/local/tomcat/lib/postgresql-42.2.5.jar:ro'
     - './webapps/hello-servlet.war:/usr/local/tomcat/webapps/hello-servlet.war:ro'
     - './secrets/keystore-password:/usr/local/tomcat/secrets/keystore-password:ro'
