@@ -11,7 +11,7 @@ fi
 # Generate properties to be added to conf/catalina.properties
 
 tee -a conf/catalina.properties >/dev/null <<EOD
-# Auto-generated from ${0} at $(date)
+# auto-generated from ${0} at $(date)
 manager.password=$(cat ${MANAGER_PASSWORD_FILE})
 db.resource-name=${DB_RESOURCE_NAME}
 db.url=${DB_URL}

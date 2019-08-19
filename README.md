@@ -2,7 +2,7 @@
 
 A docker-compose recipe for a Tomcat server instance
 
-## Prepare 
+## Prepare directory
 
 Create a directory to hold secrets (to be mounted in container):
 

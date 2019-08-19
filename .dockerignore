@@ -1,5 +1,10 @@
+README.md
 webapps/*.war
+dependency/*.jar
 temp/*
 secrets/*
+logs/*
+data/*
 docker-compose.yml
+docker-compose-*.yml
 docker-compose.yml.example
