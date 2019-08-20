@@ -1,6 +1,6 @@
 # vim: set syntax=yaml:
 
-version: '3'
+version: '3.3'
 
 services:
 
@@ -13,21 +13,54 @@ services:
       DB_RESOURCE_NAME: 'jdbc/helloworld'
       DB_URL: 'jdbc:postgresql://postgres-1.localdomain/helloworld'
       DB_USERNAME: 'user'
-      DB_PASSWORD_FILE: 'secrets/db-password'
+      DB_PASSWORD_FILE: '/run/secrets/db_password'
       DB_DRIVER_CLASS_NAME: 'org.postgresql.Driver'
-      MANAGER_PASSWORD_FILE: 'secrets/manager-password'
+      MANAGER_PASSWORD_FILE: '/run/secrets/manager_password'
 
-    volumes:  
-    - './dependency/postgresql-42.2.5.jar:/usr/local/tomcat/lib/postgresql-42.2.5.jar:ro'
-    - './webapps/hello-servlet.war:/usr/local/tomcat/webapps/hello-servlet.war:ro'
-    - './secrets/manager-password:/usr/local/tomcat/secrets/manager-password:ro'
-    - './secrets/db-password:/usr/local/tomcat/secrets/db-password:ro'
+    configs:
+    - source: 'context'
+      target: '/usr/local/tomcat/conf/context.xml'
+      mode: 0440
+    - source: 'manager_context'
+      target: '/usr/local/tomcat/webapps/manager/META-INF/context.xml'
+      mode: 0440
+    - source: 'tomcat_users'
+      target: '/usr/local/tomcat/conf/tomcat-users.xml'
+      mode: 0440
+    
+    secrets:
+    - 'manager_password'
+    - 'db_password'
+
+    volumes:
+    # Note: If no placement constraints apply, a volume should have a source visible to 
+    # the entire swarm (usually an NFS-mounted directory)
     - './logs:/usr/local/tomcat/logs'
     
     ports:
     - '8080:8080'
 
+    deploy:
+      replicas: 1
+      #placement:
+      #  constraints: 
+      #  - 'node.id==oivyn6naa0zvc9o98f1t5nsb6'
+
 volumes: {}
+
+configs:
+  'manager_context':
+    file: './webapps/manager/META-INF/context.xml'
+  'tomcat_users':
+    file: './conf/tomcat-users.xml'
+  'context':
+    file: './conf/context.xml'
+
+secrets:
+  'manager_password':
+    file: 'secrets/manager-password'
+  'db_password':
+    file: 'secrets/db-password'
 
 networks:
   default:

@@ -16,12 +16,16 @@ define relevant bind mounts inside `docker-compose.yml`.
 
 Place your webapps under `webapps` and define a relevant bind mount inside `docker-compose.yml`
 
-## Run
+## Build and run
 
 Build local image:
 
     docker-compose build
 
-Run server:
+Run service:
 
-    docker-compose up tomcat
+    docker stack deploy -c docker-compose.yml tomcat
+
+Stop and remove service:
+
+    docker stack rm tomcat

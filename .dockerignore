@@ -1,6 +1,4 @@
 README.md
-webapps/*.war
-dependency/*.jar
 temp/*
 secrets/*
 logs/*
